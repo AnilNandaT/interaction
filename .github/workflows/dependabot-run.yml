@@ -1,0 +1,21 @@
+name: Verify Build for PR changes
+
+on: pull_request
+
+jobs:
+  deploy:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        uses: actions/checkout@v3
+
+      - name: Build, tag, and push image to Amazon ECR
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        id: build-image
+        run: |
+          # Build a docker container to test dependabot PR
+          docker build -t dependabot-image:latest .
+

@@ -1,0 +1,57 @@
+name: "drug-interaction"
+platform: "tensorflow_savedmodel"
+max_batch_size: 100
+input [
+  {
+    name: "input_1"
+    data_type: TYPE_FP32
+    format: FORMAT_NHWC
+    dims: [64, 64, 1]
+  }
+]
+output [
+  {
+    name: "dense_10"
+    data_type: TYPE_FP32
+    dims: [87]
+  }
+]
+
+dynamic_batching {}
+
+instance_group [
+    {
+      count: 5
+      kind: KIND_CPU
+
+    }
+  ]
+
+model_warmup {
+    name: "Warmup1"
+    batch_size: 2
+    inputs: {
+        key: "input_1"
+        value: {
+            dims: 64
+            dims: 64
+            dims: 1
+            data_type: TYPE_FP32
+            zero_data: true
+        }
+     }
+}
+model_warmup {
+    name: "Warmup2"
+    batch_size: 2
+    inputs: {
+        key: "input_1"
+        value: {
+            dims: 64
+            dims: 64
+            dims: 1
+            data_type: TYPE_FP32
+            zero_data: true
+        }
+     }
+}

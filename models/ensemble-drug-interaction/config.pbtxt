@@ -1,0 +1,69 @@
+name: "ensemble-drug-interaction"
+platform: "ensemble"
+max_batch_size: 100
+input [
+  {
+    name: "INPUT1"
+    data_type: TYPE_STRING
+    dims: [-1]
+  },
+  {
+    name: "INPUT2"
+    data_type: TYPE_STRING
+    dims: [-1]
+  }
+]
+output [
+  {
+    name: "OUTPUT"
+    data_type: TYPE_STRING
+    dims: [1]
+  }
+]
+
+
+ensemble_scheduling {
+  step [
+    {
+      model_name: "pre-process-drug-interaction"
+      model_version: -1
+      input_map [{
+        key: "pre_process_input1"
+        value: "INPUT1"
+      },
+      {
+        key: "pre_process_input2"
+        value: "INPUT2"
+      }
+      ]
+      output_map {
+        key: "pre_process_output"
+        value: "PRE_PROCESS_OUTPUT"
+      }
+    },
+    {
+      model_name: "drug-interaction"
+      model_version: -1
+      input_map {
+        key: "input_1"
+        value: "PRE_PROCESS_OUTPUT"
+      }
+      output_map {
+        key: "dense_10"
+        value: "DI_OUTPUT"
+      }
+    },
+    {
+      model_name: "post-process-drug-interaction"
+      model_version: -1
+      input_map {
+        key: "post_process_input"
+        value: "DI_OUTPUT"
+      }
+      output_map {
+        key: "post_process_output"
+        value: "OUTPUT"
+      }
+    }
+  ]
+}

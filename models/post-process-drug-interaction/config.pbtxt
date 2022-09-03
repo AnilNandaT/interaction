@@ -1,0 +1,22 @@
+name: "post-process-drug-interaction"
+max_batch_size: 100
+backend: "python"
+input[{
+	name: "post_process_input"
+    data_type: TYPE_FP32
+	dims: [87]
+}
+]
+output[{
+	name: "post_process_output"
+	data_type: TYPE_STRING
+	dims: [ 1 ]
+}
+]
+
+instance_group[{
+	count: 5
+	kind: KIND_CPU
+}]
+
+dynamic_batching{}

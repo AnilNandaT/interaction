@@ -1,0 +1,47 @@
+# Sample Input
+{
+					  "inputs" : [
+						{
+							"name" : "INPUT1",
+							"shape" : [ 1, 1],
+							"datatype" : "BYTES",
+							"data" : ['NC(=O)C1=NC(F)=CN=C1O']
+						},
+						{
+							"name" : "INPUT2",
+							"shape" : [ 1, 1],
+							"datatype" : "BYTES",
+							"data" : ['FC(F)(F)[C@]1(OC(=O)NC2=C1C=C(Cl)C=C2)C#CC1CC1']
+						}
+						]
+}
+         
+
+# Sample Output
+
+{
+  "model_name": "ensemble-drug-interaction",
+  "model_version": "1",
+  "parameters": {
+    "sequence_id": 0,
+    "sequence_start": false,
+    "sequence_end": false
+  },
+  "outputs": [
+    {
+      "name": "OUTPUT",
+      "datatype": "BYTES",
+      "shape": [
+        1,
+        87
+      ],
+      "data": [
+        "{'label': 'The risk or severity of adverse effects can be increased when #Drug1 is combined with #Drug2.', 'value': 71.4387}",
+        "{'label': 'The metabolism of #Drug2 can be decreased when combined with #Drug1.', 'value': 13.8743}",
+        "{'label': '#Drug1 may increase the serotonergic activities of #Drug2.', 'value': 0.006}",
+        "{'label': '#Drug1 may decrease the diuretic activities of #Drug2.', 'value': 0.0054}",
+        "{'label': '#Drug1 may increase the hypoglycemic activities of #Drug2.', 'value': 0.0038}"
+      ]
+    }
+  ]
+}
